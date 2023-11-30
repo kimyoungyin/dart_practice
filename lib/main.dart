@@ -1,5 +1,3 @@
-import 'package:dart_practice/widgets/button.dart';
-import 'package:dart_practice/widgets/currency_card.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,138 +7,64 @@ void main() {
 }
 
 // flutter root widget
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  // 그저 class property
+  List<int> numbers = [];
+
+  void onClickIncrement() {
+    setState(() {
+      numbers.add(numbers.length);
+    });
+  }
+
+  void onClickDecrement() {
+    setState(() {
+      if (numbers.isNotEmpty) {
+        numbers.removeLast();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "example",
       home: Scaffold(
-        backgroundColor: const Color.fromRGBO(18, 18, 18, 1),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 80,
+        backgroundColor: const Color(0xfff4eddb),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "클릭 횟수",
+                style: TextStyle(
+                  fontSize: 30,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text(
-                          "Hey, Selena",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        Text(
-                          "Welcome back",
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.8),
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 120,
-                ),
+              ),
+              for (var n in numbers)
                 Text(
-                  "Total Balance",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white.withOpacity(0.8),
+                  "$n",
+                  style: const TextStyle(
+                    fontSize: 30,
                   ),
                 ),
-                const Text(
-                  "\$5 194 482",
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Button(
-                      text: "Transfer",
-                      bgColor: Color(0xFFF2B33A),
-                      textColor: Colors.black,
-                    ),
-                    Button(
-                      text: "Request",
-                      bgColor: Color(0xFF1F2123),
-                      textColor: Colors.white,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Text(
-                        "Wallets",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 36,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        "View All",
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                const CurrencyCard(
-                  isInverted: false,
-                  currencyName: "Euro",
-                  amount: "6 428",
-                  currencyUnit: "EUR",
-                  currencyIcon: Icons.euro_rounded,
-                  index: 0,
-                ),
-                const CurrencyCard(
-                  isInverted: true,
-                  currencyName: "Bitcoin",
-                  amount: "9 785",
-                  currencyUnit: "BTC",
-                  currencyIcon: Icons.currency_bitcoin,
-                  index: 1,
-                ),
-                const CurrencyCard(
-                  isInverted: false,
-                  currencyName: "Dollar",
-                  amount: "428",
-                  currencyUnit: "USD",
-                  currencyIcon: Icons.attach_money_outlined,
-                  index: 2,
-                ),
-              ],
-            ),
+              IconButton(
+                iconSize: 40,
+                onPressed: onClickIncrement,
+                icon: const Icon(Icons.add_box_rounded),
+              ),
+              IconButton(
+                iconSize: 40,
+                onPressed: onClickDecrement,
+                icon: const Icon(Icons.remove_circle),
+              ),
+            ],
           ),
         ),
       ),
